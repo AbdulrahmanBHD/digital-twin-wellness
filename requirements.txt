@@ -1,0 +1,5 @@
+Dependencies:
+* NumPy
+* Pandas
+* MatPlotLib
+* SciKitLearn
