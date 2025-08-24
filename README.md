@@ -42,8 +42,14 @@ This is a much more advanced and utilized machine learning model, imported from 
 ### Results
 
 #### Scores
+
+<img width="540" height="547" alt="linearscatter" src="https://github.com/user-attachments/assets/39a16530-4c7a-4289-a5b0-ed0e2e7ccaa4" />
+
 ##### Linear Regression R2 Score: 0.835907956827652 | Pass by standards! | Closer to 1 is better
 ##### Linear Regression RMSE: 7.629306511035813 | Pass by standards! | Lower is better
+
+<img width="540" height="547" alt="rfscatter" src="https://github.com/user-attachments/assets/75edba5e-314e-4c53-9a18-9420f827ecd0" />
+
 ##### Random Forest R2 Score: 0.6182319423417859 | Pass by standards! | Closer to 1 is better
 ##### Random Forest RMSE: 11.637001655850122 | Fail by standards! | Lower is better
 
