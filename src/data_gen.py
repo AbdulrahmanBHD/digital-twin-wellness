@@ -16,16 +16,18 @@ np.random.seed(42)
 n = 365  # one year of data
 
 # Generate features
-#steps, movement_mins, calories, diet_qlt, water_l, sleep_mins, sleep_qlt,
-#stress_avg, mood_entry_avg, coffee_mg, prod_mins, screen_mins, resting_hr_avg
+#steps, exercise_mins, diet_qlt, water_l, sleep_mins, sleep_qlt,
+#stress_avg, mood_avg, coffee_mg, prod_mins, screen_mins, rhr_avg
 sleep_hrs = np.clip(np.random.normal(7.2, 1.2, n), 4, 10)
 sleep_qlt = np.random.randint(4, 10, n)
 steps = np.random.randint(1000, 20000, n)
-resting_hr_avg = np.clip(np.random.normal(70, 8, n), 50, 90)
+rhr_avg = np.clip(np.random.normal(70, 8, n), 50, 90)
 screen_time_hrs = np.clip(np.random.normal(5, 2.5, n), 0, 12)
 water_l = np.clip(np.random.normal(2.2, 0.8, n), 0, 4)
 stress_avg = np.random.randint(1, 11, n)
+mood_avg = np.random.randint(1, 11, n)
 caffeine_mg = np.clip(np.random.normal(120, 80, n), 0, 400)
+diet_qlt = np.random.randint(1, 11, n)
 prod_mins = np.random.randint(0, 480, n)
 exercise_mins = np.random.randint(0, 180, n)
 
@@ -37,15 +39,22 @@ screen_mins = screen_time_hrs * 60
 def normalize(x): return (x - np.min(x)) / (np.max(x) - np.min(x))
 
 wellness = (
-    0.3*normalize(sleep_mins) +
-    0.2*normalize(sleep_qlt) +
-    0.15*normalize(steps) +
-   -0.15*normalize(stress_avg) +
-   -0.1*normalize(screen_mins) +
-    0.1*normalize(exercise_mins) +
-    0.05*normalize(water_l) +
-    np.random.normal(0, 0.05, n)  # noise
+    0.25*normalize(sleep_mins) + # big impact
+    0.15*normalize(sleep_qlt) + # strong, but slightly less
+    0.15*normalize(steps) + # physical activity
+    -0.05*normalize(rhr_avg) + # higher RHR is worse
+    -0.10*normalize(screen_mins) + # moderate negative
+    0.05*normalize(water_l) + # hydration
+    -0.15*normalize(stress_avg) + # stress destroys wellness
+    0.05*normalize(mood_avg) + # mood carries over
+    -0.05*normalize(caffeine_mg) + # excess caffeine penalized
+    0.05*normalize(diet_qlt) + # diet quality
+    0.04*normalize(prod_mins) + #productivity small positive
+    0.10*normalize(exercise_mins) + # targeted exercise
+    np.random.normal(0, 0.05, n) # noise
 )
+
+# TODO: Replace hand-tuned weights with ML-learned feature importances
 
 # Scale to 0–100
 wellness_tmrw = np.clip(100*normalize(wellness), 0, 100)
@@ -54,11 +63,13 @@ df = pd.DataFrame({
     "sleep_mins": sleep_mins,
     "sleep_qlt": sleep_qlt,
     "steps": steps,
-    "resting_hr_avg": resting_hr_avg,
+    "rhr_avg": rhr_avg,
     "screen_mins": screen_mins,
     "water_l": water_l,
-    "stress_1_10": stress_avg,
+    "stress_avg": stress_avg,
+    "mood_avg": mood_avg,
     "caffeine_mg": caffeine_mg,
+    "diet_qlt": diet_qlt,
     "prod_mins": prod_mins,
     "exercise_mins": exercise_mins,
     "wellness_tmrw": wellness_tmrw
