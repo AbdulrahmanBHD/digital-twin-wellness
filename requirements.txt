@@ -3,3 +3,5 @@ Dependencies:
 * Pandas
 * MatPlotLib
 * SciKitLearn
+* Seaborn
+* OS
