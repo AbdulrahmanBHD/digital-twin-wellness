@@ -28,9 +28,6 @@ import seaborn as sns
 import os
 import sklearn
 
-#...
-#Task: update dependencies
-
 #Next, I will load the dataset as a pandas dataframe
 df = pd.read_csv("/WDT/data/wellness_synthetic.csv")
 
