@@ -88,6 +88,28 @@ from sklearn.metrics import r2_score, root_mean_squared_error
 print("RF R2:", r2_score(y_test, rf_preds))
 print("RF RMSE:", root_mean_squared_error(y_test, rf_preds))
 
+
+#Visualization
+import matplotlib.pyplot as plt
+plt.figure(figsize=(6,6))
+plt.scatter(y_test, lr_preds, alpha=0.5, label="Predicted (LR)")
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', label="Ideal")
+plt.xlabel("Actual Wellness Tomorrow")
+plt.ylabel("Predicted Wellness Tomorrow")
+plt.title("Predicted vs Actual (Linear Regression)")
+plt.legend()
+plt.show()
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(6,6))
+plt.scatter(y_test, rf_preds, alpha=0.5, label="Predicted (RF)")
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', label="Ideal")
+plt.xlabel("Actual Wellness Tomorrow")
+plt.ylabel("Predicted Wellness Tomorrow")
+plt.title("Predicted vs Actual (Random Forest)")
+plt.legend()
+plt.show()
+
 """Surprisingly, the simpler model did better. We will explore why in a moment
 
 ### 5. Feature Importance & Interpretation
